@@ -1,86 +1,100 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Certificate Verification</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #f4f7fb;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
     }
+
     .card {
-      background: white;
-      padding: 25px 30px;
-      border-radius: 8px;
-      width: 100%;
+      background: #ffffff;
+      padding: 36px 40px;
+      border-radius: 18px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.12);
       max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      text-align: center;
     }
-    h2 {
-      margin-top: 0;
-      color: #004999;
+
+    .icon {
+      font-size: 64px;
+      margin-bottom: 12px;
     }
-    .status.valid {
-      color: green;
-      font-weight: bold;
+
+    h1 {
+      margin: 0 0 8px;
+      color: #0f172a;
     }
-    .status.invalid {
-      color: red;
-      font-weight: bold;
+
+    p {
+      color: #475569;
+      font-size: 15px;
+      margin: 6px 0;
     }
-    .label {
-      color: #666;
+
+    .id {
+      background: #f1f5f9;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 14px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .brand {
+      margin-top: 20px;
+      font-weight: 700;
+      color: #004999;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>AI Learning Hub</h2>
-    <p><b>Certificate Verification</b></p>
-
-    <div id="result">Checking certificate...</div>
+  <div class="card" id="card">
+    <div id="icon" class="icon">⏳</div>
+    <h1 id="status">Checking certificate…</h1>
+    <p id="message"></p>
+    <div id="cid" class="id"></div>
+    <div class="brand">AI Learning Hub</div>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const certId = params.get("id");
 
-    fetch('certificates.json')
-      .then(response => response.json())
-      .then(data => {
-        const result = document.getElementById('result');
+    const status = document.getElementById("status");
+    const message = document.getElementById("message");
+    const icon = document.getElementById("icon");
+    const cid = document.getElementById("cid");
 
-        if (!id) {
-          result.innerHTML =
-            '<p class="status invalid">❌ No Credential ID provided</p>';
-          return;
-        }
-
-        if (data[id]) {
-          const c = data[id];
-          result.innerHTML = `
-            <p class="status valid">✅ VALID CERTIFICATE</p>
-            <p><span class="label">Name:</span> ${c.name}</p>
-            <p><span class="label">Course:</span> ${c.course}</p>
-            <p><span class="label">Date:</span> ${c.date}</p>
-          `;
-        } else {
-          result.innerHTML =
-            '<p class="status invalid">❌ Certificate NOT FOUND</p>';
-        }
-      })
-      .catch(() => {
-        document.getElementById('result').innerHTML =
-          '<p class="status invalid">❌ Error loading verification data</p>';
-      });
+    if (!certId) {
+      icon.textContent = "❌";
+      status.textContent = "Invalid Certificate";
+      message.textContent = "No Credential ID provided.";
+    } else if (certId.startsWith("AILH")) {
+      icon.textContent = "✅";
+      status.textContent = "Certificate Verified";
+      message.textContent =
+        "This certificate is verified as an authentic AI Learning Hub certificate.";
+      cid.textContent = certId;
+    } else {
+      icon.textContent = "❌";
+      status.textContent = "Certificate Not Verified";
+      message.textContent =
+        "This credential ID is not recognized as a valid AI Learning Hub certificate.";
+      cid.textContent = certId;
+    }
   </script>
 
 </body>
