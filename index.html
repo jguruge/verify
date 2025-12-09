@@ -2,69 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Certificate Verified</title>
+  <title>Certificate Verification</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Arial, sans-serif;
       background: #f4f7fb;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
     }
-
     .card {
-      background: #ffffff;
-      padding: 40px 36px;
-      border-radius: 18px;
-      text-align: center;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.15);
-      max-width: 420px;
+      background: white;
+      padding: 25px 30px;
+      border-radius: 8px;
       width: 100%;
+      max-width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-
-    .icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      color: #0f172a;
-    }
-
-    p {
-      color: #475569;
-      font-size: 15px;
-      margin: 6px 0;
-    }
-
-    .brand {
-      margin-top: 24px;
-      font-weight: 700;
+    h2 {
+      margin-top: 0;
       color: #004999;
-      letter-spacing: 0.04em;
+    }
+    .status.valid {
+      color: green;
+      font-weight: bold;
+    }
+    .status.invalid {
+      color: red;
+      font-weight: bold;
+    }
+    .label {
+      color: #666;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <div class="icon">✅</div>
-    <h1>Certificate Verified</h1>
-    <p>
-      This certificate has been issued and verified by
-      <strong>AI Learning Hub</strong>.
-    </p>
-    <p>
-      You may confidently accept this certification.
-    </p>
+    <h2>AI Learning Hub</h2>
+    <p><b>Certificate Verification</b></p>
 
-    <div class="brand">AI Learning Hub</div>
+    <div id="result">Checking certificate...</div>
   </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    fetch('certificates.json')
+      .then(response => response.json())
+      .then(data => {
+        const result = document.getElementById('result');
+
+        if (!id) {
+          result.innerHTML =
+            '<p class="status invalid">❌ No Credential ID provided</p>';
+          return;
+        }
+
+        if (data[id]) {
+          const c = data[id];
+          result.innerHTML = `
+            <p class="status valid">✅ VALID CERTIFICATE</p>
+            <p><span class="label">Name:</span> ${c.name}</p>
+            <p><span class="label">Course:</span> ${c.course}</p>
+            <p><span class="label">Date:</span> ${c.date}</p>
+          `;
+        } else {
+          result.innerHTML =
+            '<p class="status invalid">❌ Certificate NOT FOUND</p>';
+        }
+      })
+      .catch(() => {
+        document.getElementById('result').innerHTML =
+          '<p class="status invalid">❌ Error loading verification data</p>';
+      });
+  </script>
 
 </body>
 </html>
