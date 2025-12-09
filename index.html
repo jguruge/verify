@@ -1,14 +1,338 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Certificate Verified</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification - AI Learning Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: #000000;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 280px;
+            height: 80px;
+            background: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: #cccccc;
+            margin-top: 8px;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 50px 40px;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .verified-badge {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: scaleIn 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .checkmark::before {
+            content: '✓';
+            color: #ffffff;
+            font-size: 50px;
+            font-weight: bold;
+            animation: checkmarkPop 0.4s ease-out 0.6s both;
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .verified-badge h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .verified-badge .status {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.6s ease-out both;
+        }
+
+        .info-card:nth-child(1) { animation-delay: 0.8s; }
+        .info-card:nth-child(2) { animation-delay: 0.9s; }
+        .info-card:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .info-card .label {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-card .value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            animation: fadeIn 0.6s ease-out 1.1s both;
+        }
+
+        .footer p {
+            color: #666666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .footer .timestamp {
+            font-weight: 600;
+            color: #000000;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 0;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .logo {
+                width: 220px;
+                height: 65px;
+            }
+
+            .verified-badge h2 {
+                font-size: 26px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .detail-value {
+                text-align: left;
+            }
+        }
+    </style>
 </head>
-<body style="font-family: Arial; text-align:center; padding-top:100px">
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="https://media.licdn.com/dms/image/v2/D5610AQFX4g4XJvEOIA/image-shrink_800/B56Zjx1igSHIAk-/0/1756404001485?e=2147483647&v=beta&t=RnD-PcSaSyUJ30Y2VnO7zuvoUM_e2gMh7kbjiS6bOJc" alt="AI Learning Hub" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 100%22%3E%3Crect fill=%22%23000%22 width=%22400%22 height=%22100%22/%3E%3Ctext x=%22200%22 y=%2260%22 font-family=%22Arial%22 font-size=%2228%22 fill=%22%23fff%22 text-anchor=%22middle%22 font-weight=%22bold%22%3EAI Learning Hub%3C/text%3E%3C/svg%3E'">
+                </div>
+            </div>
+            <p>Professional Certificate Verification</p>
+        </div>
 
-  <h1>✅ Certificate Verified</h1>
-  <p>Issued by AI Learning Hub</p>
+        <div class="content">
+            <div class="verified-badge">
+                <div class="checkmark"></div>
+                <h2>Certificate Verified</h2>
+                <p class="status">✓ Authenticity Confirmed</p>
+            </div>
 
+
+
+
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="icon">📚</div>
+                    <div class="label">Duration</div>
+                    <div class="value">Full Course</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon">🎯</div>
+                    <div class="label">Status</div>
+                    <div class="value">Completed</div>
+                </div>
+                <div class="info-card">
+                    <div class="icon">✨</div>
+                    <div class="label">Verification</div>
+                    <div class="value">Valid</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>This certificate validates the successful completion of the specified course.<br>
+            All credentials are verified and maintained in our secure database.</p>
+            <p class="timestamp">Verified on: December 9, 2025</p>
+        </div>
+    </div>
 </body>
 </html>
