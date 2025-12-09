@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Certificate Verification</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Certificate Verified</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
@@ -18,21 +18,21 @@
 
     .card {
       background: #ffffff;
-      padding: 36px 40px;
+      padding: 40px 36px;
       border-radius: 18px;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+      text-align: center;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.15);
       max-width: 420px;
       width: 100%;
-      text-align: center;
     }
 
     .icon {
       font-size: 64px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     h1 {
-      margin: 0 0 8px;
+      margin: 0 0 10px;
       color: #0f172a;
     }
 
@@ -42,60 +42,29 @@
       margin: 6px 0;
     }
 
-    .id {
-      background: #f1f5f9;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 14px;
-      margin-top: 10px;
-      display: inline-block;
-    }
-
     .brand {
-      margin-top: 20px;
+      margin-top: 24px;
       font-weight: 700;
       color: #004999;
+      letter-spacing: 0.04em;
     }
   </style>
 </head>
 <body>
 
-  <div class="card" id="card">
-    <div id="icon" class="icon">⏳</div>
-    <h1 id="status">Checking certificate…</h1>
-    <p id="message"></p>
-    <div id="cid" class="id"></div>
+  <div class="card">
+    <div class="icon">✅</div>
+    <h1>Certificate Verified</h1>
+    <p>
+      This certificate has been issued and verified by
+      <strong>AI Learning Hub</strong>.
+    </p>
+    <p>
+      You may confidently accept this certification.
+    </p>
+
     <div class="brand">AI Learning Hub</div>
   </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const certId = params.get("id");
-
-    const status = document.getElementById("status");
-    const message = document.getElementById("message");
-    const icon = document.getElementById("icon");
-    const cid = document.getElementById("cid");
-
-    if (!certId) {
-      icon.textContent = "❌";
-      status.textContent = "Invalid Certificate";
-      message.textContent = "No Credential ID provided.";
-    } else if (certId.startsWith("AILH")) {
-      icon.textContent = "✅";
-      status.textContent = "Certificate Verified";
-      message.textContent =
-        "This certificate is verified as an authentic AI Learning Hub certificate.";
-      cid.textContent = certId;
-    } else {
-      icon.textContent = "❌";
-      status.textContent = "Certificate Not Verified";
-      message.textContent =
-        "This credential ID is not recognized as a valid AI Learning Hub certificate.";
-      cid.textContent = certId;
-    }
-  </script>
 
 </body>
 </html>
